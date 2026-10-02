@@ -5,11 +5,13 @@ import React from 'react'
 const StyledCardRoot = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.paper : '#ffffff',
   padding: theme.spacing(1.5),
-  borderRadius: theme.shape.borderRadius,
+  // borderRadius: theme.shape.borderRadius,
   boxShadow: theme.shadows[2],
   overflow: 'hidden',
   width: '100%',
   height: '100%',
+  borderRadius: '15px',
+
 }))
 
 type Props = {

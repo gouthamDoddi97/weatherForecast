@@ -3,14 +3,15 @@ import { Box } from '@mui/material'
 
 interface ComponentProps {
   rowLength: number;
-  componentsList: { component: React.ReactNode, height?: string }[];  
+  componentsList: { component: React.ReactNode, height?: string }[];
+  height?: string; 
 }
 
-function VerticalGrid({ componentsList  }: ComponentProps) {
+function VerticalGrid({ componentsList, height  }: ComponentProps) {
   return (
     <Box
       sx={{
-        height: "100%",
+        height: height? height : "100%",
         display: "grid",
         gridTemplateRows: componentsList
           .map(({ height }) => height)
@@ -27,6 +28,7 @@ function VerticalGrid({ componentsList  }: ComponentProps) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            
           }}
         >
           {component}

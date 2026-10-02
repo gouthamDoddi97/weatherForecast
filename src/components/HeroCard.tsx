@@ -17,7 +17,7 @@ function HeroCard() {
           </div>
 
           <div className="w-full h-full flex justify-center items-center">
-            <Card className="w-[50%] h-[80%] justify-end items-end ml-22 opacity-45">
+            <Card className="w-[50%] h-[80%] justify-end items-center ml-22 opacity-45 flex">
               <p className="text-sm text-center">
                 For this IoT weather dashboard, we focused on building a calm and immersive
                  experience where users can monitor forecasts, live conditions, humidity, 

@@ -100,6 +100,7 @@ function ClimateCarousel() {
               gap: 2,
               width: "100%",
               height: "100%",
+              padding: 1,
             }}
           >
             {visibleCards.map((item, index) => (
