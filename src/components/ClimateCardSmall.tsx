@@ -1,16 +1,12 @@
-import VerticalGrid from './layout/VerticalGrid'
 import { WeatherConditionIcons } from '../data/enums'
-import StyledCard from './StyledCard'
 
 function ClimateCard({ time, temperature, condition }: { time: string, temperature: number, condition: keyof typeof WeatherConditionIcons }) {
   return (
-    <StyledCard>
-      <VerticalGrid rowLength={3} height={"100%"} componentsList={[
-        { component: <div>{time}</div>, height: '20%' },
-        { component: <div className="text-2xl leading-none">{WeatherConditionIcons[condition]}</div>, height: '1fr' },
-        { component: <div>{temperature}°</div>, height: '20%' },
-      ]} />
-    </StyledCard>
+    <div className="hour-card">
+      <span className="hour-card-time">{time}</span>
+      <span className="hour-card-icon" aria-hidden="true">{WeatherConditionIcons[condition]}</span>
+      <strong>{temperature}°</strong>
+    </div>
   )
 }
 

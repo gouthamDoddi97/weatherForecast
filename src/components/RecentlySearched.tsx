@@ -1,25 +1,22 @@
-import { BiArrowFromRight } from 'react-icons/bi';
-import type { RecentSearchedLocationType } from '../types/components.ts'
-import { RecentSearchedLocations } from '../data/componentsData';
+import { useWeather } from '../context/useWeather';
+import { WeatherConditionIcons } from '../data/enums';
 
 function RecentlySearched() {
+  const { recentLocations, searchLocation } = useWeather();
   return (
-    <div className="flex h-full w-full min-h-0 flex-col gap-3 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-      <header className="flex items-center justify-between border-b border-gray-200 pi-2">
-        <h2 className="text-base font-semibold">Searched</h2>
-        <BiArrowFromRight className="absolute right-4 top-4 text-lg text-gray-400" />
+    <div className="recent-panel section-panel">
+      <header className="recent-header">
+        <h2 className="section-heading">Recently searched</h2>
+        <span className="recent-see-all">{recentLocations.length} {recentLocations.length === 1 ? 'place' : 'places'}</span>
       </header>
-      <div className="flex flex-col gap-2 p-4">
-        {
-          RecentSearchedLocations.map((location: RecentSearchedLocationType, index: number) => (
-            <div key={index} className="flex items-center justify-between border-b border-gray-200 pb-2">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold">{location.location}</span>
-                <span className="text-sm text-gray-500">{location.time}</span>
-              </div>
-            </div>
-          ))
-        }
+      <div className="recent-list">
+        {recentLocations.length ? recentLocations.slice(0, 3).map((location) => (
+          <button key={location.city} className="recent-place" onClick={() => void searchLocation(location.city)}>
+            <span className="recent-weather-icon" aria-hidden="true">{WeatherConditionIcons[location.condition]}</span>
+            <span className="recent-place-copy"><strong>{location.city}{location.region ? `, ${location.region}` : ''}</strong><small>{location.country}</small></span>
+            <span className="recent-temp">{location.temperature}°</span>
+          </button>
+        )) : <p className="recent-empty">Searched cities will appear here.</p>}
       </div>
     </div>
   )

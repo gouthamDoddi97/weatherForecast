@@ -1,44 +1,33 @@
-import { Grid } from '@mui/material';
 import HeroCard from '../HeroCard';
-import VerticalGrid from './VerticalGrid';
 import DayTimeline from '../DayTimeline';
 import WeekTimeline from '../WeekTimeline';
 import Header from './Header';
 import LiveConditions from '../LiveConditions';
 import RecentlySearched from '../RecentlySearched';
+import WindMap from '../WindMap';
 
 function ContentLayout() {
   return (
-    <div className="w-full h-full">
+    <div className="weather-app">
       <Header />
-      <Grid
-        container
-        sx={{
-          height: "90svh",
-        }}
-      >
-        
-        <Grid size={{ xs: 12, md: 8 }}>
-          <VerticalGrid
-            rowLength={3}
-            componentsList={[
-              { component: <HeroCard />, height: "30vh" },
-              { component: <DayTimeline />, height: "20vh" },
-              { component: <WeekTimeline />, height: "30vh" },
-            ]}
-          />
-        </Grid>
-
-        <Grid size={{ xs: 12, md: 4 }}>
-          <VerticalGrid
-            rowLength={2}
-            componentsList={[
-              { component: <LiveConditions />, height: "40vh" },
-              { component: <RecentlySearched />, height: "60vh" },
-            ]}
-          />
-        </Grid>
-      </Grid>
+      <main className="weather-dashboard">
+        <div className="forecast-column">
+          <section className="dashboard-current"><HeroCard /></section>
+          <section className="dashboard-hourly section-panel" aria-labelledby="hourly-heading">
+            <div className="panel-heading-row"><h2 id="hourly-heading" className="section-heading">Today, by the hour</h2><span className="section-kicker">Next hours</span></div>
+            <DayTimeline />
+          </section>
+          <section className="dashboard-week section-panel" aria-labelledby="week-heading">
+            <div className="panel-heading-row"><h2 id="week-heading" className="section-heading">7-day forecast</h2><span className="section-kicker">High / low</span></div>
+            <WeekTimeline />
+          </section>
+        </div>
+        <aside className="conditions-column">
+          <LiveConditions />
+          <RecentlySearched />
+          <WindMap />
+        </aside>
+      </main>
     </div>
   );
 }

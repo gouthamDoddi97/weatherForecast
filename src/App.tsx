@@ -1,14 +1,13 @@
 import './index.css'
-import HomeLayout from './components/layout/homeLayout'
-import Navbar from './components/navbar.tsx'
-import { navItems } from './data/navbar'
+import './App.css'
 import ContentLayout from './components/layout/contentLayout.tsx';
+import { WeatherProvider } from './context/WeatherContext';
 
 function App() {
   return (
-    <div>
-      <HomeLayout Nav={<Navbar navItems={navItems} />} Body={<ContentLayout />} />
-    </div>
+    <WeatherProvider>
+      <ContentLayout />
+    </WeatherProvider>
   )
 }
 

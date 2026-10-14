@@ -1,34 +1,17 @@
 import { useState } from 'react'
 import { Box, IconButton, Slide } from '@mui/material'
 import ClimateCardSmall from './ClimateCardSmall'
-import { WeatherConditionIcons } from '../data/enums'
 import { FaCircleArrowLeft, FaCircleArrowRight  } from "react-icons/fa6";
-
-const data: {time: string, value: number, condition: keyof typeof WeatherConditionIcons}[] = [
-  {time: "now", value: 20, condition: "Sunny"},
-  {time: "2 pm", value: 20, condition: "Sunny"},
-  {time: "3 pm", value: 19, condition: "Sunny"},
-  {time: "4 pm", value: 18, condition: "Cloudy"},
-  {time: "5 pm", value: 16, condition: "Cloudy"},
-  {time: "6 pm", value: 15, condition: "Rain"},
-  {time: "7 pm", value: 14, condition: "Rain"},
-  {time: "8 pm", value: 13, condition: "Rain"},
-  {time: "9 pm", value: 12, condition: "Rain"}
-]
-
-
-// type ClimateItem = {
-//   time: string;
-//   value: number;
-//   condition: string;
-// };
+import { useWeather } from '../context/useWeather';
 
 function ClimateCarousel() {
+  const { weather, isLoading } = useWeather();
   const CARDS_PER_PAGE = 6;
 
   const [page, setPage] = useState(0);
   const [direction, setDirection] = useState<"left" | "right">("left");
 
+  const data = weather?.hourly ?? [];
   const pageCount = Math.ceil(data.length / CARDS_PER_PAGE);
 
   const next = () => {
@@ -50,36 +33,32 @@ function ClimateCarousel() {
 
   return (
     <Box
+      className="hourly-carousel"
       sx={{
         position: "relative",
         width: "100%",
         overflow: "hidden",
-        height: "100%",
+        height: "calc(100% - 44px)",
       }}
     >
-      {/* Left button */}
       <IconButton
+        aria-label="Previous hours"
         onClick={previous}
         disabled={page === 0}
+        className="carousel-button carousel-button-left"
         sx={{
           position: "absolute",
           left: 0,
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 10,
-          backgroundColor: "white",
-          boxShadow: 2,
-
-          "&:hover": {
-            backgroundColor: "white",
-          },
         }}
       >
         <FaCircleArrowLeft />
       </IconButton>
 
-      {/* Carousel viewport */}
       <Box
+        className="hourly-viewport"
         sx={{
           overflow: "hidden",
           mx: 6,
@@ -94,43 +73,42 @@ function ClimateCarousel() {
           key={page}
         >
           <Box
+            className="hourly-track"
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
-              gap: 2,
+              gridTemplateColumns: "repeat(6, minmax(0, 1fr))",
+              gap: 1,
               width: "100%",
               height: "100%",
-              padding: 1,
+              padding: "8px 4px",
             }}
           >
             {visibleCards.map((item, index) => (
               <ClimateCardSmall
                 key={`${item.time}-${index}`}
                 time={item.time}
-                temperature={item.value}
-                condition={item.condition as keyof typeof WeatherConditionIcons}
+                temperature={item.temperature}
+                condition={item.condition}
               />
             ))}
           </Box>
         </Slide>
       </Box>
 
-      {/* Right button */}
+      {isLoading && !weather && <div className="absolute inset-0 grid place-items-center bg-white/70">Loading forecast...</div>}
+      {!isLoading && !weather && <div className="absolute inset-0 grid place-items-center bg-white/70">No hourly forecast available.</div>}
+
       <IconButton
+        aria-label="Next hours"
         onClick={next}
         disabled={page === pageCount - 1}
+        className="carousel-button carousel-button-right"
         sx={{
           position: "absolute",
           right: 0,
           top: "50%",
           transform: "translateY(-50%)",
           zIndex: 10,
-          backgroundColor: "white",
-          boxShadow: 2,
-
-          "&:hover": {
-            backgroundColor: "white",
-          },
         }}
       >
         <FaCircleArrowRight />
