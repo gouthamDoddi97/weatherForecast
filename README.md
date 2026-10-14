@@ -1,102 +1,46 @@
-# React + TypeScript + Vite
+# WeatherForecast
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WeatherForecast is a responsive weather dashboard for checking current conditions and forecasts by city. It combines a dark, glass-inspired interface with live weather data, a temperature trend chart, hourly and seven-day forecasts, recently searched places, and a wind-direction compass.
 
-Currently, two official plugins are available:
+## Preview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The hero image changes with the current conditions. These are examples of the clear and overcast weather artwork used in the dashboard.
 
-## React Compiler
+| Clear conditions | Cloudy and stormy conditions |
+| --- | --- |
+| ![Golden light over a clear landscape](https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=85) | ![Clouds over a dark landscape](https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=900&q=85) |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Search for a city and view its current temperature, feels-like temperature, and daily high and low.
+- Browse the next 24 hours and the upcoming seven-day forecast.
+- Review humidity, wind speed, and pressure alongside a live temperature chart.
+- See wind speed and compass direction based on the selected location.
+- Return to recently searched places, with weather summaries from their latest searches.
+- Use the dashboard on desktop and mobile layouts.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Weather Data
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Weather data comes from [Open-Meteo](https://open-meteo.com/). The app uses its geocoding API to find city coordinates and its forecast API for current, hourly, and daily conditions. No API key is required.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Hero photography is served by [Unsplash](https://unsplash.com/), so an internet connection is needed to load the weather images.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Run Locally
 
-```
+Install dependencies and start the Vite development server:
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-## Tailwind
-
-To enable Tailwind CSS in this project:
-
-1. Install dependencies:
-
-```bash
-pnpm add -D tailwindcss postcss autoprefixer
-pnpm dlx tailwindcss init -p
-```
-
-2. Add the Tailwind directives to `src/index.css`:
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
-3. Start the dev server:
-
-```bash
+```sh
+pnpm install
 pnpm dev
 ```
 
-The project has been updated to include `tailwind.config.cjs` and `postcss.config.cjs`.
+## Checks
+
+```sh
+pnpm lint
+pnpm build
+```
+
+## Tech Stack
+
+React, TypeScript, and Vite power the application. The UI uses Tailwind CSS and Material UI, while Chart.js renders the hourly temperature chart.
